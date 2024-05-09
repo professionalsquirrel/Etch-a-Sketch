@@ -29,6 +29,11 @@ h1 {
     height: 600px;
 }
 
-label {
+label, button {
     font-family: inherit;
+}
+
+button {
+    background-color: white;
+    font-size: 1em;
 }
