@@ -1,25 +1,36 @@
 //Generate 16x16 grid upon loading page
 const container = document.querySelector(".container");
 
-//Function that builds a grid
-function buildGrid(number){
-        for (i=1; i<=number*number; i++){
-        const square = document.createElement("div");
-        const size = 560/number;
-        square.style.boxSizing = "border-box";
-        square.style.border = "1px solid darkmagenta";
-        square.style.backgroundColor = "pink";
-        square.style.width = size;
-        square.style.height = size;
-        square.addEventListener("mouseenter", 
-        e => square.style.backgroundColor = "lightblue");
-        container.appendChild(square);
+function generateGrid(numberPerSide){
+        removeSquares();
+        addSquares(numberPerSide);
 }
-}
-
-buildGrid(16);
 
 //Generate new grid based on user input
-const nBoxes = document.querySelector("label");
-nBoxes.addEventListener("oninput",
- e => buildGrid(nBoxes.value));
+const input = document.querySelector("input");
+input.addEventListener("input", () => generateGrid(input.valueAsNumber));
+
+function addSquares(numberPerSide){
+        for (i=1; i<=numberPerSide*numberPerSide; i++){
+                let square = document.createElement("div");
+                let size = 660/numberPerSide;
+                let borderThickness = 0.05;
+                if (numberPerSide>50) { borderThickness = 0.01};
+                square.style.cssText = 
+`box-sizing: border-box; width: ${size}px; height: ${size}px; background-color: pink; border: ${borderThickness}em solid darkmagenta; flex: auto;`;
+                square.addEventListener("mouseenter", 
+                e => square.style.backgroundColor = "lightblue")
+                square.classList.add("square");
+                container.appendChild(square);
+        }
+}
+
+function removeSquares(){
+        const children = container.getElementsByTagName("div");
+        while (children.length){
+                children[0].remove();
+        }
+}
+
+//Generates an initial 16x16 grid
+generateGrid(16);
